@@ -1,0 +1,50 @@
+import os 
+
+name = input("Please enter your full name here: ")
+name = name.title()
+address = str(input("Please enter your full address here: "))
+phone_number = str(input("Please enter your phone number here: "))
+
+print("You will now be asked for your preference on a file name and directory")
+print()
+print("For the file name, please enter the desired file name with the file type (example: name.txt)")
+print()
+file_name = input("Please enter file name here: ")
+print()
+print("For the directory, please enter the full directory where you would like this file to be stored")
+print()
+print("If you are using windows, use two backslashes in the place of one")
+print()
+print("Example: 'C:\\Users\\john\\Desktop\\python_work'")
+print()
+directory = input("Please enter the directory of preference here: ")
+print()
+
+#This will first check if the chosen directory exists
+#at the same time, it will change the directory that this is running in to that directory
+#when the information is saved, it'll then store in that directory
+#if that directory doesn't exist, the second part will create it
+try: 
+	os.chdir(directory)
+except FileNotFoundError:
+	os.mkdir(directory)
+	os.chdir(directory)
+
+user_data = [name, address, phone_number]
+
+#This is how I interpreted the request to have all the data be in a comma serparated line
+#The chapter covered line commands specifically
+#but i thought the join and str changes here made more sense for this assignment 
+
+
+user_data_line = ", ".join([str(item) for item in user_data])
+
+with open(file_name, 'w') as file_object:
+	file_object.write(user_data_line)
+
+with open(file_name) as file_object:
+	contents = file_object.read()
+
+print("Your personal information is as follows: ")
+print()
+print(contents)
